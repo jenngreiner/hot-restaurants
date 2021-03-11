@@ -10,9 +10,6 @@ const path = require('path')
 const app = express();
 var PORT = process.env.PORT || 3000;
 
-app.listen(PORT, function () {
-    console.log(`Listening at port ${PORT}`)
-});
 
 const tables = []
 
@@ -31,33 +28,29 @@ app.get('/api/tables', (req, res) => res.json(tables));
 app.get('/api/waitlist', (req, res) => res.json(waitList));
 
 // Create New Reservation - takes in JSON input
-if (tables.length < 5) {
-    app.post('/api/tables', (req, res) => {
-        // req.body hosts is equal to the JSON post sent from the user
-        // This works because of our body parsing middleware
-        const newTable = req.body;
 
-        // Using a RegEx Pattern to remove spaces from newCharacter
-        // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-        newTable.routeName = newTable.name.replace(/\s+/g, '').toLowerCase();
-        console.log(newTable);
+console.log(tables.length)
+
+app.post('/api/tables', (req, res) => {
+    // req.body hosts is equal to the JSON post sent from the user
+    // This works because of our body parsing middleware
+    const newTable = req.body;
+
+    // Using a RegEx Pattern to remove spaces from newCharacter
+    // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+    newTable.routeName = newTable.name.replace(/\s+/g, '').toLowerCase();
+    console.log(newTable);
+    if (tables.length < 5) {
 
         tables.push(newTable);
         res.json(newTable);
-    });
-} else {
-    app.post('/api/waitlist', (req, res) => {
-        // req.body hosts is equal to the JSON post sent from the user
-        // This works because of our body parsing middleware
-        const newTable = req.body;
-
-        // Using a RegEx Pattern to remove spaces from newCharacter
-        // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-        newTable.routeName = newTable.name.replace(/\s+/g, '').toLowerCase();
-        console.log(newTable);
+    } else {
 
         waitList.push(newTable)
         res.json(waitList)
-    })
-}
+    }
+})
 
+app.listen(PORT, function () {
+    console.log(`Listening at port ${PORT}`)
+});
