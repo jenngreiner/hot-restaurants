@@ -36,10 +36,17 @@
                 <label>Unique ID</label>
                 <input type="text" class="form-control" id="uniqueID">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" id="add-btn">Submit</button>
         </form>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+    <script src="jquery-3.5.1.min.js"></script>
     <script type="text/javascript">
 
         const addBtn = document.getElementById('add-btn');
@@ -50,42 +57,37 @@
 
             // Question: What does this code do? stores html element values as variables
 
-            let charName = document.getElementById('name').value.trim();
-            let charRole = document.getElementById('role').value.trim();
-            let charAge = document.getElementById('age').value.trim();
-            let charFp = document.getElementById('force-points').value.trim();
+            let tableName = document.getElementById('name').value.trim();
+            let phoneNumber = document.getElementById('phone').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let uniqueID = document.getElementById('uniqueID').value.trim();
 
-            let newCharacter = {
-                name: charName,
-                role: charRole,
-                age: parseInt(charAge),
-                forcePoints: parseInt(charFp),
+            let newTable = {
+                name: tableName,
+                phoneNumber: phoneNumber,
+                email: email,
+                id: uniqueID,
             };
 
+
             // Question: What does this code do??
-            fetch('/api/characters', {
+            fetch('/api/tables', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newCharacter),
+                body: JSON.stringify(newTable),
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log('add.html', data);
-                    alert(`Adding character: ${data.name}`);
+                    console.log('reserve.html', data);
+                    alert(`Adding reservation: ${data.name}`);
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
 
 </body>
 
