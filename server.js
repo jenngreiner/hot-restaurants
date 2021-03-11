@@ -1,12 +1,14 @@
 // Dependencies
 
 const express = require('express');
-const path = require('path');
+const nodemon = require('nodemon');
+const path = require('path')
+
 
 // Sets up the Express App
 
 const app = express();
-var PORT = process.env.PORT || 3001;
+var PORT = process.env.PORT || 3000;
 
 app.listen(PORT, function () {
     console.log(`Listening at port ${PORT}`)
@@ -27,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Route
-app.get("/", (req, res) => res.send(path.join(__dirname, "home.html")));
+// app.get('/', (req, res) => res.send("it works"));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'home.html')));
 app.get('/tables', (req, res) => res.sendFile(path.join(__dirname, 'tables.html')));
 app.get('/reservation', (req, res) => res.sendFile(path.join(__dirname, 'reserve.html')));
